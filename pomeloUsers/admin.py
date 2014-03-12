@@ -1,5 +1,5 @@
 from django.contrib import admin
-from pomeloUser.models import PomeloUser Gift
+from pomeloUsers.models import PomeloUser, Gift
 
 class PomeloUserAdmin(admin.ModelAdmin):
 	list_display = ('id', 'user')
@@ -7,5 +7,5 @@ class PomeloUserAdmin(admin.ModelAdmin):
 class GiftAdmin(admin.ModelAdmin):
 	list_display = ('id', 'name', 'price', 'message', 'url_video', 'sender', 'receiver')
 	
-admin.siste.register(PomeloUser, PomeloUserAdmin)
-admin.siste.register(Gift, GiftAdmin)
+admin.site.register(PomeloUser, PomeloUserAdmin)
+admin.site.register(Gift, GiftAdmin)
