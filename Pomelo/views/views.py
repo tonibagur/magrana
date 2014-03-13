@@ -8,7 +8,7 @@ def registerGift(request):
     if (request.method=='POST'):
         form = GiftForm(request.POST)
         if form.is_valid():
-            pass
+            form.save()
         else:
             return render(request, "form.html", {
                 'form' : form,

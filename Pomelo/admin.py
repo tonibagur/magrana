@@ -5,7 +5,7 @@ class PomeloUserAdmin(admin.ModelAdmin):
     list_display = ('id', 'user')
     
 class GiftAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'price', 'message', 'url_video', 'sender', 'receiver')
+    list_display = ('id', 'product', 'price', 'message', 'url_video', 'sender', 'receiver')
     
 admin.site.register(PomeloUser, PomeloUserAdmin)
 admin.site.register(Gift, GiftAdmin)
