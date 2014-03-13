@@ -8,10 +8,13 @@ class PomeloUser(models.Model):
     class Meta:
         abstract = False
         app_label = 'Pomelo'
+        
+    def __unicode__(self):
+        return self.user
 
 class Gift(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=20)
+    product = models.CharField(max_length=20)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     message = models.CharField(max_length=500, null=True)
     url_video = models.CharField(max_length=500, null=True)
@@ -19,7 +22,7 @@ class Gift(models.Model):
     receiver = models.ForeignKey(PomeloUser, related_name='receiver')
     
     def __unicode__(self):
-        return self.name
+        return self.product
 
     class Meta:
         abstract = False

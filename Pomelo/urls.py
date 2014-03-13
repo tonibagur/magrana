@@ -8,6 +8,6 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'Pomelo.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^$', views.registerGift, name='form'),
+    url(r'^demo_gift', views.registerGift),
     url(r'^admin/', include(admin.site.urls)),
 )

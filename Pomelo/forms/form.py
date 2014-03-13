@@ -1,8 +1,7 @@
-from django import forms
+from django.forms import ModelForm
+from .. models.models import Gift
 
-class GiftForm(forms.Form):
-    name = forms.CharField(max_length=20)
-    price = forms.DecimalField()
-    email = forms.EmailField()
-    message = forms.CharField(max_length=500)
-    url_video = forms.CharField(max_length=500)
+class GiftForm(ModelForm):
+    class Meta:
+        model = Gift
+        fields = '__all__'
