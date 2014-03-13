@@ -32,23 +32,42 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'djangocms_admin_style', #for the admin skin. You must add 'djangocms_admin_style' in the list before 'django.contrib.admin'.
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'south',
+
+    # Django CMS
+    'djangocms_text_ckeditor', # note this needs to be above the 'cms' entry
+    'cms', # django CMS itself
+    'cms.stacks', # for reusable content
+    'mptt', #utilities for implementing a modified pre-order traversal tree
+    'menus', # helper for model independent hierarchical website navigation
+    'south', # intelligent schema and data migrations
+    'sekizai', # for javascript and css management
+
     'Pomelo',
 )
 
 MIDDLEWARE_CLASSES = (
+
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.doc.XViewMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware',
 )
 
 ROOT_URLCONF = 'Pomelo.urls'
@@ -92,3 +111,33 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, "templates")
 )
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.request',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    #'cms.context_processors.cms_settings',
+    'sekizai.context_processors.sekizai',
+)
+
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/var/www/example.com/static/"
+STATIC_ROOT = os.path.join(PROJECT_PATH, "static")
+
+MEDIA_ROOT = os.path.join(PROJECT_PATH, "media")
+MEDIA_URL = "/media/"
+
+CMS_TEMPLATES = (
+    ('empty.html', 'Empty Template'),
+)
+
+LANGUAGES = [
+    ('en', 'English'),
+]
+
+SITE_ID = 1
