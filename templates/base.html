@@ -1,37 +1,87 @@
+<!DOCTYPE html>
+
 {% load cms_tags sekizai_tags %}
+
+{% addtoblock 'css' %}
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- CSS Global Compulsory-->
+    <link rel="stylesheet" href="{{STATIC_URL}}assets/plugins/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}assets/css/style.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}assets/css/headers/header1.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}assets/css/responsive.css">
+    <!--<link rel="shortcut icon" href="{{STATIC_URL}}images/logo_hostelcat.png">-->      
+    <!-- CSS Implementing Plugins -->    
+    <link rel="stylesheet" href="{{STATIC_URL}}assets/plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}assets/plugins/fancybox/source/jquery.fancybox.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}assets/plugins/flexslider/flexslider.css">    	
+    <link rel="stylesheet" href="{{STATIC_URL}}assets/plugins/parallax-slider/css/parallax-slider.css">
+    <!-- CSS Page Style -->    
+    <link rel="stylesheet" href="{{STATIC_URL}}assets/css/pages/page_pricing.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}assets/plugins/font-awesome/css/font-awesome.css">
+    <!-- CSS Theme -->    
+    <link rel="stylesheet" href="assets/css/themes/default.css" id="style_color">
+    <link rel="stylesheet" href="assets/css/themes/headers/default.css" id="style_color-header-1">
+
+    <link rel="stylesheet" href="{{STATIC_URL}}assets/css/coneptum.css">
+
+{% endaddtoblock %}
+
+{% addtoblock 'js' %}
+    <!-- JS Global Compulsory -->			
+    <script type="text/javascript" src="{{STATIC_URL}}assets/plugins/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}assets/plugins/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}assets/plugins/bootstrap/js/bootstrap.min.js"></script> 
+    <script type="text/javascript" src="{{STATIC_URL}}assets/plugins/hover-dropdown.min.js"></script> 
+    <script type="text/javascript" src="{{STATIC_URL}}assets/plugins/back-to-top.js"></script>
+<!-- JS Implementing Plugins -->           
+<script type="text/javascript" src="{{STATIC_URL}}assets/plugins/flexslider/jquery.flexslider-min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}assets/plugins/parallax-slider/js/modernizr.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}assets/plugins/parallax-slider/js/jquery.cslider.js"></script> 
+<script type="text/javascript" src="{{STATIC_URL}}assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
+<!-- JS Page Level -->           
+<script type="text/javascript" src="{{STATIC_URL}}assets/js/app.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}assets/js/pages/index.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+      	App.init();
+        App.initFancybox();
+    });
+</script>
+
+{% endaddtoblock %}
+
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Pomelo</title>
-        {% render_block "css" %}
+	<head>
+		<meta charset="utf-8">
+        {% render_block 'css' %}
+        <title>{% block title %}POMELO{% endblock %}</title>
     </head>
-  <body>
-      {% cms_toolbar %}
 
-      <header id="header" class="">
+	<body>
+        {% cms_toolbar %}
+		{% block afterbody %}	
+		{% endblock afterbody %}
+
+		<header id="header" class="">
 		{% block header %}
-        <h1>Pomelo</h1>
-		<p>Hello </p>
-		<p>My Account</p>
-			<ul>
-				<li> <a href="#">THE COMPANY</a> </li>
-				<li> <a href="#">OUR PRODUCT</a> </li>
-				<li> <a href="#">OUR BRANDS</a> </li>
-				<li> <a href="#">CALENDAR</a> </li>
-				<li> <a href="#">WISHLIST</a> </li>
-			</ul>
-        	<div class="center">
-		<ul>
-			<li> <a href="#">MY GIFT STORY</a> </li>
-			<li> <a href="#">SEND A GIFT</a> </li>
-			<li> <a href="#">REDEEM A GIFT</a> </li>
-		</ul>
-	</div>
+			
+			
 		{% endblock header %}
-	  </header><!-- /header -->
+		</header><!-- /header -->
+        <div>&nbsp;</div>
+		<div class="container">
+		{% block container %}
+			
+		{% endblock container %}
+		</div>
 
-      {% placeholder base_content %}
-      {% block base_content %}{% endblock %}
-      {% render_block "js" %}
-  </body>
+
+	</body>
+	{% render_block 'js' %}
 </html>

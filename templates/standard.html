@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load cms_tags menu_tags sekizai_tags %}
+{% load i18n %}
+
+{% block header %}
+
+<!--=== Top ===-->    
+<div class="top">
+    <div class="container">         
+        <ul class="loginbar pull-right">
+           <!--{% language_chooser %}
+            
+            <li class="devider"></li>   
+            <li><a href="page_faq.html">Help</a></li>  
+            <li class="devider"></li>-->
+            {% trans "Welcome" %} 
+            {% if user.is_authenticated %}
+                {{user.username}}
+                <li class="devider"></li>
+                <li><a href="/accounts/password_change">{% trans "Profile" %}</a></li>
+                <li class="devider"></li>
+                <li><a href="/accounts/logout/">{% trans "Logout" %}</a></li>
+            {% else %}	
+                 <li>(<a href="/accounts/login/">{% trans "Login" %}</a>)</li> 
+            {% endif %}
+        </ul>
+    </div>      
+</div><!--/top-->
+<!--=== End Top ===-->  
+
+<!--=== Header ===-->  
+<div class="header">
+    <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/" style="margin-top:-15px;">
+                    <h1><font style="color:#72c02c">POMELO</font></h1>
+                    <!--<img id="logo-header" src="{{STATIC_URL}}images/logo-web.png" alt="Logo">-->
+                </a>
+            </div>
+
+
+             <div class="collapse navbar-collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    {% show_menu 0 100 100 100 %}
+
+                    <!-- Search <li class="hidden-sm"><a class="search"><i class="search-btn icon-search"></i></a></li>-->
+	            </ul>
+                <!-- Search
+                <div style="display: none;" class="search-open">
+                    <div class="input-group">
+                        <input class="form-control" placeholder="Buscar" type="text">
+                        <span class="input-group-btn">
+                            <button class="btn-u" type="button">Ir</button>
+                        </span>
+                    </div>
+                </div>-->
+
+             </div>
+        </div>    
+    </div>   
+    {% block placeholder_header %} 
+        {% placeholder standard_header_container %}
+    {% endblock placeholder_header %}
+</div><!--/header-->        
+
+
+{% endblock header %}
+
+
+<!--=== Content Part ===-->
+<div class="container">	
+    {% block container %}
+	    {% block cms_container %}	
+            <div id="standard_page_container" class="span12">
+		        {% placeholder standard_page_container %}
+	        </div>
+        {% endblock %}
+
+    {% endblock container%}
+</div>
