@@ -9,6 +9,7 @@ def registerGift(request):
         form = GiftForm(request.POST)
         if form.is_valid():
             form.save()
+            return render(request, "resposta.html");
         else:
             return render(request, "form.html", {
                 'form' : form,

@@ -3,14 +3,14 @@ from django.contrib.auth.models import User
 
 class PomeloUser(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User)
+    user = models.OneToOneField(User)
 
     class Meta:
         abstract = False
         app_label = 'Pomelo'
         
     def __unicode__(self):
-        return self.user
+        return unicode(self.user)
 
 class Gift(models.Model):
     id = models.AutoField(primary_key=True)
