@@ -50,6 +50,9 @@ INSTALLED_APPS = (
     'south', # intelligent schema and data migrations
     'sekizai', # for javascript and css management
 
+    # youtube
+    'django_youtube',
+
     'Pomelo',
 )
 
@@ -141,3 +144,8 @@ LANGUAGES = [
 ]
 
 SITE_ID = 1
+
+YOUTUBE_AUTH_EMAIL = 'coneptum@gmail.com'
+YOUTUBE_AUTH_PASSWORD = 'tumconep2012'
+YOUTUBE_DEVELOPER_KEY = 'AI39si6_Enu4odz-IDBXNjgciY68sYUG9Rvvw-tArLx9Z-RRbIVVTz69t7lilgW2XhxdmTFtRAH8nU6nq358_mFktq43RIuJPg'
+YOUTUBE_CLIENT_ID = 'client-id'
