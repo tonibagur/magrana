@@ -1,5 +1,7 @@
 {% extends "standard.html" %}
+{% load i18n %}
 {% block container %}
+{% load widget_tweaks %}
 	<h1>Pomelo</h1>
 		<p>Hello </p>
 		<p>My Account</p>
@@ -23,5 +25,19 @@
 		{{ form.as_p }}
 		<input type="submit" value="Submit" />
 		</form>
+        <form id="id_youtube_form" action="{{ y_post_url }}?nexturl={{ y_next_url }}" method="post" enctype="multipart/form-data">
+	        {{ youtube_form.file }}
+	        {{ youtube_form.token.as_hidden }}
+	    </form>
+        <img src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" style="display: none;" id="loading_image">
+        {% if form.url_video.value %}
+            <iframe width="560" height="315" src="{{form.youtube_embed.value}}" frameborder="0" allowfullscreen></iframe>
+        {% endif %}
 	</div>
+    <script>
+        document.getElementById("id_file").onchange = function() {
+            document.getElementById('loading_image').style.display = 'block';
+            document.getElementById("id_youtube_form").submit();
+        };
+    </script>
 {% endblock container%}

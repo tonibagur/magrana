@@ -52,6 +52,7 @@ INSTALLED_APPS = (
 
     # youtube
     'django_youtube',
+    'widget_tweaks',
 
     'Pomelo',
 )
@@ -145,7 +146,21 @@ LANGUAGES = [
 
 SITE_ID = 1
 
+# YOUTUBE
 YOUTUBE_AUTH_EMAIL = 'coneptum@gmail.com'
 YOUTUBE_AUTH_PASSWORD = 'tumconep2012'
 YOUTUBE_DEVELOPER_KEY = 'AI39si6_Enu4odz-IDBXNjgciY68sYUG9Rvvw-tArLx9Z-RRbIVVTz69t7lilgW2XhxdmTFtRAH8nU6nq358_mFktq43RIuJPg'
 YOUTUBE_CLIENT_ID = 'client-id'
+YOUTUBE_UPLOAD_REDIRECT_URL = '/demo_gift/'
+
+# EMAIL
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'coneptum@gmail.com'
+EMAIL_HOST_PASSWORD = 'tumconep2012'
+DEFAULT_FROM_EMAIL = 'coneptum@gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+SERVER_EMAIL = 'coneptum@gmail.com'
+#from django.core.mail import send_mail
+#send_mail('Subject here', 'Here is the message.', 'from@example.com', ['to@example.com'], fail_silently=False)
