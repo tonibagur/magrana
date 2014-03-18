@@ -18,6 +18,7 @@ class Gift(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     message = models.CharField(max_length=500, null=True)
     url_video = models.CharField(max_length=500, null=True)
+    youtube_embed = models.CharField(max_length=500, null=True)
     sender = models.ForeignKey(PomeloUser, related_name='sender')
     receiver = models.ForeignKey(PomeloUser, related_name='receiver', null=True)
     

@@ -62,8 +62,28 @@
 								<div class="input-group"><span class="input-group-addon"><i class=" icon-gift"></i></span>{{form.products | attr:"class:form-control" }}</div>
 							</div>
 						</div>
+                        {{ form.youtube_embed.as_hidden }}
 					</div>
 				</form>
+				<form id="id_youtube_form" action="{{ y_post_url }}?nexturl={{ y_next_url }}" method="post" enctype="multipart/form-data">
+					
+                    <div class="col-md-2">
+                        <input class="btn btn-default icon-upload-alt btn-u-large" id="id_file" name="file" type="file"/>
+						<!--<button class="btn btn-default icon-upload-alt btn-u-large" type="button">{% trans " Browse" %}</button>-->
+					</div>
+					{{ youtube_form.token.as_hidden }}
+					
+				</form>
+				<img src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" style="display: none;" id="loading_image">
+					{% if form.url_video.value %}
+				<iframe width="560" height="315" src="{{form.youtube_embed.value}}" frameborder="0" allowfullscreen></iframe>
+					{% endif %}
+				<script>
+					document.getElementById("id_file").onchange = function() {
+					document.getElementById('loading_image').style.display = 'block';
+					document.getElementById("id_youtube_form").submit();
+					};
+				</script>
 			</div>
 		</div>
 	</div>
