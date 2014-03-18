@@ -19,7 +19,7 @@ class Gift(models.Model):
     message = models.CharField(max_length=500, null=True)
     url_video = models.CharField(max_length=500, null=True)
     sender = models.ForeignKey(PomeloUser, related_name='sender')
-    receiver = models.ForeignKey(PomeloUser, related_name='receiver')
+    receiver = models.ForeignKey(PomeloUser, related_name='receiver', null=True)
     
     def __unicode__(self):
         return self.product

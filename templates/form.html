@@ -1,27 +1,71 @@
 {% extends "standard.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
 {% block container %}
-	<h1>Pomelo</h1>
-		<p>Hello </p>
-		<p>My Account</p>
-			<ul>
-				<li> <a href="#">THE COMPANY</a> </li>
-				<li> <a href="#">OUR PRODUCT</a> </li>
-				<li> <a href="#">OUR BRANDS</a> </li>
-				<li> <a href="#">CALENDAR</a> </li>
-				<li> <a href="#">WISHLIST</a> </li>
-			</ul>
-	<div class="center">
-		<ul>
-			<li> <a href="#">MY GIFT STORY</a> </li>
-			<li> <a href="#">SEND A GIFT</a> </li>
-			<li> <a href="#">REDEEM A GIFT</a> </li>
-		</ul>
+<ul>
+	<li> <a href="#">CALENDAR</a> </li>
+	<li> <a href="#">WISHLIST</a> </li>
+</ul>
+
+<div class="tab-v2">
+	<ul class="nav nav-tabs">
+		<li class=""> <a data-toggle="tab" href="#">MY GIFT STORY</a></li>
+		<li class=""> <a data-toggle="tab" href="#form">SEND A GIFT</a></li>
+		<li class=""> <a data-toggle="tab" href="#">REDEEM A GIFT</a></li>
+	</ul>
+</div>
+
+
+
+
+<div class="tab-pane">
+	<div class="tab-content">
+		<div id="form" class="tab-pane">
+			<div class="panel-body">
+				<form method="post">{% csrf_token %}
+					<div class="row margin-bottom-10">
+						<div class="col-md-9">
+							<div class="row margin-bottom-10">
+								<div class="col-md-6">
+									<div class="input-group"><span class="input-group-addon">@</span>{{form.receiver | attr:"class:form-control" }}</div>
+								</div>
+								<div class="col-md-6">
+									<div class="input-group"><span class="input-group-addon"><i class="icon-envelope"></i></span>{{form.email | attr:"class:form-control" }}</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="row margin-bottom-10">
+								<div class="col-md-6"><div class="input-group"><span class="input-group-addon"><i class="icon-usd"></i></span>{{form.price | attr:"class:form-control" }}</div></div>
+								<div class="col-md-6"><input type="submit" class="btn-u" value="Submit"/></div>
+							</div>
+						</div>
+						</div>
+						<div class="row margin-bottom-10">
+							<div class="col-md-9">
+							{{form.message | attr:"class:form-control" | attr:"placeholder:(100 words)" }}
+							</div>
+						</div>
+						<div class="row margin-bottom-10">
+							<div class="col-md-4">
+								<div class="input-group"><span class="input-group-addon"><i class="icon-youtube-play"></i></span>{{form.url_video | attr:"class:form-control" }}</div>
+							</div>
+							<div class="col-md-2">
+								<button class="btn btn-default icon-facetime-video btn-u-large" type="button">{% trans " Use webcam" %}</button>
+							</div>
+							<div class="col-md-2">
+								<button class="btn btn-default icon-upload-alt btn-u-large" type="button">{% trans " Browse" %}</button>
+							</div>
+						</div>
+						<div class="row margin-bottom-10">
+							<div class="col-md-4">
+								<div class="input-group"><span class="input-group-addon"><i class=" icon-gift"></i></span>{{form.products | attr:"class:form-control" }}</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
-	<div class="form">
-		<form method="post">{% csrf_token %}
-		
-		{{ form.as_p }}
-		<input type="submit" value="Submit" />
-		</form>
-	</div>
+</div>
 {% endblock container%}
