@@ -2,26 +2,27 @@
 {% load widget_tweaks %}
 {% load i18n %}
 {% block container %}
-<ul>
-	<li> <a href="#">CALENDAR</a> </li>
-	<li> <a href="#">WISHLIST</a> </li>
-</ul>
 
 <div class="tab-v2">
 	<ul class="nav nav-tabs">
 		<li class=""> <a data-toggle="tab" href="#">MY GIFT STORY</a></li>
-		<li class=""> <a data-toggle="tab" href="#form">SEND A GIFT</a></li>
+		<li class="active"> <a data-toggle="tab" href="#form">SEND A GIFT</a></li>
 		<li class=""> <a data-toggle="tab" href="#">REDEEM A GIFT</a></li>
 	</ul>
 </div>
 
+<form id="id_youtube_form" action="{{ y_post_url }}?nexturl={{ y_next_url }}" method="post" enctype="multipart/form-data">
+	{{ youtube_form.token.as_hidden }}
+</form>
 
-
-
-<div class="tab-pane">
+<div class="tab-pane active">
 	<div class="tab-content">
-		<div id="form" class="tab-pane">
+		<div id="form" class="tab-pane active">
 			<div class="panel-body">
+				<img src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" style="display: none;" id="loading_image">
+					{% if form.url_video.value %}
+				<iframe width="560" height="315" src="{{form.youtube_embed.value}}" frameborder="0" allowfullscreen></iframe>
+					{% endif %}
 				<form method="post">{% csrf_token %}
 					<div class="row margin-bottom-10">
 						<div class="col-md-9">
@@ -54,7 +55,7 @@
 								<button class="btn btn-default icon-facetime-video btn-u-large" type="button">{% trans " Use webcam" %}</button>
 							</div>
 							<div class="col-md-2">
-								<button class="btn btn-default icon-upload-alt btn-u-large" type="button">{% trans " Browse" %}</button>
+								 <input id="id_file" type="file" name="file" class="filestyle" data-input="false" form="id_youtube_form"/>
 							</div>
 						</div>
 						<div class="row margin-bottom-10">
@@ -65,23 +66,11 @@
                         {{ form.youtube_embed.as_hidden }}
 					</div>
 				</form>
-				<form id="id_youtube_form" action="{{ y_post_url }}?nexturl={{ y_next_url }}" method="post" enctype="multipart/form-data">
-					
-                    <div class="col-md-2">
-                        <input class="btn btn-default icon-upload-alt btn-u-large" id="id_file" name="file" type="file"/>
-						<!--<button class="btn btn-default icon-upload-alt btn-u-large" type="button">{% trans " Browse" %}</button>-->
-					</div>
-					{{ youtube_form.token.as_hidden }}
-					
-				</form>
-				<img src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" style="display: none;" id="loading_image">
-					{% if form.url_video.value %}
-				<iframe width="560" height="315" src="{{form.youtube_embed.value}}" frameborder="0" allowfullscreen></iframe>
-					{% endif %}
+								
 				<script>
 					document.getElementById("id_file").onchange = function() {
-					document.getElementById('loading_image').style.display = 'block';
-					document.getElementById("id_youtube_form").submit();
+						document.getElementById('loading_image').style.display = 'block';
+						document.getElementById("id_youtube_form").submit();
 					};
 				</script>
 			</div>
