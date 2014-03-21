@@ -1,0 +1,29 @@
+{% extends "standardtabs.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block panel_body %}
+<p>Hola</p>
+{% for gift in gifts %} 
+<div class="row margin-bottom-10">
+	<div class="col-md-6">
+		<p>{{gift.receiver}}</p>
+	</div>
+	<div class="col-md6">
+		<p>{{gift.price}}</p>
+	</div>
+</div>
+<div class="row margin-bottom-10">
+	<div class="col-md-6">
+		<iframe width="560" height="315" src="{{gift.url_video}}" frameborder="0" allowfullscreen></iframe>
+	</div>
+	<div class="col-md-6">
+		<p>{{gift.message}}</p>
+	</div>
+</div>
+<div class="row margin-bottom-10">
+	<div class="col-md-9">
+		<p>{{gift.product}}</p>
+	</div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "standard.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block extra_container %}
+<div class="tab-v2">
+	<ul class="nav nav-tabs tabs-v2">
+		<li id="story"> <a data-toggle="tab" href="#gift_story">MY GIFT STORY</a></li>
+		<li class="active"> <a data-toggle="tab" href="#form">SEND A GIFT</a></li>
+		<li> <a data-toggle="tab" href="#reendem">REDEEM A GIFT</a></li>
+	</ul>
+</div>
+
+
+	<div class="tab-content">
+		<div id="gift_story" class="tab-pane">
+			<div class="panel-body">
+				{% block panel_body %}
+				{% endblock %}
+			</div>
+		</div>
+			
+		<div id="form" class="tab-pane active">
+			<div class="panel-body">
+				{% block panel_body %}
+				{% endblock %}
+			</div>
+		</div>
+		
+		<div id="reendem" class="tab-pane">
+			<div class="panel-body">
+			</div>
+		</div>
+	</div>
+{% endblock extra_container %}
