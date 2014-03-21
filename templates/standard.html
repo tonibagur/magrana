@@ -76,11 +76,12 @@
 <!--=== Content Part ===-->
 <div class="container">	
     {% block container %}
-	    {% block cms_container %}	
+	    {% block cms_container %}
             <div id="standard_page_container" class="span12">
 		        {% placeholder standard_page_container %}
 	        </div>
         {% endblock %}
-
+		{% block extra_container %}
+		{% endblock extra_container %}
     {% endblock container%}
 </div>

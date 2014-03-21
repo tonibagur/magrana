@@ -15,10 +15,10 @@ class GiftForm(ModelForm):
     )
     products = forms.ChoiceField(choices=name_products)
     email = forms.EmailField()
+    youtube_embed = forms.CharField(required=False)
+    message = forms.CharField(required=False, widget=Textarea(attrs={'cols': 100, 'rows': 5}))
+    url_video = forms.CharField(required=False)
     class Meta:
         model = Gift
         exclude = ['sender', 'product', 'id']
-        widgets = {
-	    'message': Textarea(attrs={'cols': 100, 'rows': 5}),
-        }
         

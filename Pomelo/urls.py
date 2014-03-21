@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from views import views
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.contrib import admin
 admin.autodiscover()
 
@@ -9,9 +10,11 @@ urlpatterns = patterns('',
     # url(r'^$', 'Pomelo.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     (r'^youtube/', include('django_youtube.urls')),
+    url(r'^$', login_required(views.home, login_url='/accounts/login/'), name='home'),
     url(r'^accounts/login/$', 'django.contrib.auth.views.login',{'template_name': 'login.html'}),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout'),# {'template_name': 'myproject/shop_logout.html'}),
-    url(r'^demo_gift/', views.registerGift),
+    #url(r'^demo_gift/story', login_required(views.views_gifts, login_url='/accounts/login/'), name='gift_story'),
+    url(r'^demo_gift/', login_required(views.register_gift, login_url='/accounts/login/'), name='demo_gift'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('cms.urls')),
 )

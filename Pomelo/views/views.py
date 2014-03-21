@@ -8,16 +8,20 @@ from django_youtube.models import Video
 from django.core.mail import send_mail
 import random
 from .. forms.form import GiftForm
+from .. models.models import Gift
 from .. models.models import PomeloUser
 #send_mail('Subject here', 'Here is the message.', 'from@example.com', ['to@example.com'], fail_silently=False)
 
 subject = 'You\'ve received a Pomelo Card'
 
+def home(request):
+	return HttpResponseRedirect('/demo_gift/')
+
 def create_message(name_sender, name_receiver, message_sender, url):
     message = 'Dear ' + str(name_receiver) + ',\n' + name_sender  + ' just sent you a Pomelo Card Gift.\nCheck the video at the following url:\n' + url + '\n\n"' + message_sender + '" -- ' + name_sender + '\n\nPomelo\'s Team.'
     return message
 
-def registerGift(request):
+def register_gift(request):
         if (request.method=='POST'):
 	    request_copy = request.POST.copy()
 	    receiver = False
@@ -32,10 +36,10 @@ def registerGift(request):
 		gift.sender = PomeloUser.objects.get(user=request.user.id)
 		gift.product = request.POST['products']
 		gift.save()
-		receiver = PomeloUser.objects.get(user=gift.receiver)
+		receiver = PomeloUser.objects.get(id=gift.receiver.id)
 		message = create_message(request.user.username, receiver, gift.message, gift.url_video)
 		send_mail(subject, message, request.user.email, [request.POST['email']], fail_silently=False)  
-		return render(request, "resposta.html")
+		return render(request, "gift_confirmation.html")
 	    else:
 		print 'errors',form.errors         
 		return render(request, "form.html", {
@@ -63,5 +67,11 @@ def registerGift(request):
 		    'y_next_url':y_next_url,
 		})
 
+def views_gifts(request):
+    pomelo_user = PomeloUser.objects.get(user=request.user.id)
+    gifts = Gift.objects.filter(sender=pomelo_user.id)
+    return render(request, "gift_story.html", {
+	    'gift' : gifts,
+	})
 
         
