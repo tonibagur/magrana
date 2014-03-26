@@ -19,9 +19,9 @@ def home(request):
         return HttpResponseRedirect('/demo_gift/')
 
 def create_message(name_sender, name_receiver, message_sender, url):
-    message = 'Dear ' + str(name_receiver) + ',\n' + name_sender  + ' just sent you a Pomelo Card Gift.\nCheck the video at the following url:\n' + url + '\n\n'
+    message = 'Dear ' + str(name_receiver) + ',\n' + name_sender  + ' just sent you a Pomelo Card Gift.\nCheck the video at the following url:\n' + str(url) + '\n\n'
     if (message_sender!=''):
-        message = message + '"' + message_sender + '" -- '
+        message = message + '"' + str(message_sender) + '" -- '
     message = message + name_sender + '\n\n' +  'Pomelo\'s Team.'
     return message
 
@@ -36,10 +36,24 @@ def register_gift(request):
             request_copy['receiver'] = str(receiver.id)
         form = GiftForm(request_copy)
         if form.is_valid():
-            gift = form.save(commit=False)
-            gift.sender = PomeloUser.objects.get(user=request.user.id)
-            gift.product = request.POST['products']
-            gift.state ='sent'
+	    sender = PomeloUser.objects.get(user=request.user.id)
+            gifts = Gift.objects.filter(sender=sender.id)
+            if (len(gifts) > 0):
+		gift = gifts.last()
+            if (gift.state=='draft'):
+		gift.product = request.POST['products']
+                gift.email = request.POST['email']
+                gift.price = request.POST['price']
+                gift.message = request.POST['message']
+                gift.state = 'sent'
+                gift.receiver = PomeloUser.objects.get(id=request.POST.get('receiver'))
+		gift.youtube_embed = request.POST['youtube_embed']
+		gift.url_video = request.POST['url_video']
+            else:
+                gift = form.save(commit=False)
+                gift.sender = sender
+                gift.product = request.POST['products']
+                gift.state ='sent'
             gift.save()
             receiver = PomeloUser.objects.get(id=gift.receiver.id)
             message = create_message(request.user.username, receiver, gift.message, gift.url_video)
@@ -100,7 +114,7 @@ def save_draft(request):
             gift.email = email
             gift.price = price
             gift.message = message
-            gift.receiver=receiver
+            gift.receiver = receiver
             gift.sender = id_pomelo_user
             gift.save()
     return HttpResponse(gift.id)
