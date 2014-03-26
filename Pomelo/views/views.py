@@ -19,9 +19,9 @@ def home(request):
         return HttpResponseRedirect('/demo_gift/')
 
 def create_message(name_sender, name_receiver, message_sender, url):
-    message = 'Dear ' + str(name_receiver) + ',\n' + name_sender  + ' just sent you a Pomelo Card Gift.\nCheck the video at the following url:\n' + url + '\n\n"'
+    message = 'Dear ' + str(name_receiver) + ',\n' + name_sender  + ' just sent you a Pomelo Card Gift.\nCheck the video at the following url:\n' + url + '\n\n'
     if (message_sender!=''):
-        message = message + message_sender + '" -- '
+        message = message + '"' + message_sender + '" -- '
     message = message + name_sender + '\n\n' +  'Pomelo\'s Team.'
     return message
 
