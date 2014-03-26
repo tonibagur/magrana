@@ -9,5 +9,38 @@
 			Send more gift
 		</a>
 	</div>
+	
+{% for gift in gifts %} 
+<br/><br/>
+<div style="border-right: 2px solid rgb(114, 192, 44);">
+	{% if gift.state == 'sent' %}
+	<div class="row margin-bottom-10">
+		<div class="col-md-6">
+			<iframe width="400" height="220" src="{{gift.youtube_embed}}" frameborder="0" allowfullscreen></iframe>
+		</div>
+		<div class="col-md-6" style="padding-top:25px;">
+			<div class="row">
+				<label class="col-md-3">Receiver:</label>
+				<label class="col-md-3" style="font-weight:normal;">{{gift.receiver}}</label>
+			</div>
+			<div class="row">
+				<label class="col-md-3">Price:</label>
+				<label class="col-md-3" style="font-weight:normal;">{{gift.price}} $</label>
+			</div>
+			<div class="row">
+				<label class="col-md-3">Message:</label>
+				<label class="col-md-3" style="font-weight:normal;">{{gift.message}}</label>
+			</div>
+		</div>
+	</div>
+	<div class="row margin-bottom-10">
+		<div class="col-md-9">
+			<!--<p>{{gift.product }}</p>-->
+		</div>
+	</div>
+	{%endif%}
+</div>
+<br/><br/>
+{% endfor %}
 {% endblock panel_body %}
 

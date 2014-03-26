@@ -38,9 +38,10 @@ def register_gift(request):
         if form.is_valid():
 	    sender = PomeloUser.objects.get(user=request.user.id)
             gifts = Gift.objects.filter(sender=sender.id)
+	    gift = None
             if (len(gifts) > 0):
 		gift = gifts.last()
-            if (gift.state=='draft'):
+            if (gift and gift.state=='draft'):
 		gift.product = request.POST['products']
                 gift.email = request.POST['email']
                 gift.price = request.POST['price']
@@ -80,7 +81,8 @@ def register_gift(request):
                 init['message'] = gift_tmp.message
                 init['price'] = gift_tmp.price
                 init['email'] = gift_tmp.email
-                init['receiver'] = gift_tmp.receiver.id
+		if (gift_tmp.receiver!=None):
+		    init['receiver'] = gift_tmp.receiver.id
                 init['products'] = gift_tmp.product
         form = GiftForm(initial=init)
         youtube_form,y_post_url,y_next_url = upload(request,ret_view=False)             
@@ -95,7 +97,9 @@ def register_gift(request):
 @csrf_exempt
 def save_draft(request):
     id_pomelo_user = PomeloUser.objects.get(user=request.user.id)
-    receiver = PomeloUser.objects.get(id=request.POST.get('receiver'))
+    receiver = None
+    if (request.POST.get('receiver')!=''):
+	receiver = PomeloUser.objects.get(id=request.POST.get('receiver'))
     email = request.POST.get('email')
     price = request.POST.get('price')
     message = request.POST.get('message')
@@ -114,7 +118,8 @@ def save_draft(request):
             gift.email = email
             gift.price = price
             gift.message = message
-            gift.receiver = receiver
+	    if (receiver):
+		gift.receiver = receiver
             gift.sender = id_pomelo_user
             gift.save()
     return HttpResponse(gift.id)

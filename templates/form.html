@@ -55,7 +55,8 @@
 					</div>
 				</form>
 								
-				<script>					
+				<script>				
+					//var csrftoken = $.cookie('csrftoken');
 					document.getElementById("id_file").onchange = function() {
 						$.ajax({
 							type: 'POST',
@@ -72,7 +73,6 @@
 								document.getElementById("id_youtube_form").submit();
 							}
 						});
-						
 					};
 				</script>
 {% endblock panel_body %}
