@@ -81,6 +81,7 @@
 {% for gift in gifts %} 
 <br/><br/>
 <div style="border-right: 2px solid rgb(114, 192, 44);">
+	{{gift.state}}
 	{% if gift.state.value == 'sent' %}
 	<div class="row margin-bottom-10">
 		<div class="col-md-6">
