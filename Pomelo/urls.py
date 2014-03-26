@@ -15,7 +15,8 @@ urlpatterns = patterns('',
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout'),# {'template_name': 'myproject/shop_logout.html'}),
     #url(r'^demo_gift/story', login_required(views.views_gifts, login_url='/accounts/login/'), name='gift_story'),
     url(r'^demo_gift/', login_required(views.register_gift, login_url='/accounts/login/'), name='demo_gift'),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^save_draft/', login_required(views.save_draft, login_url='/account/login'), name='save_draft'),
+    url(r'^admin/', include(admin.site.urls)),    
     url(r'^', include('cms.urls')),
 )
 

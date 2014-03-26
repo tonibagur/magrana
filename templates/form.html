@@ -20,28 +20,26 @@
 						<div class="col-md-9">
 							<div class="row margin-bottom-10">
 								<div class="col-md-6" class="col-md-6">
-									<div class="input-group"><span class="input-group-addon">@</span>{{form.receiver | attr:"class:form-control" }}</div>
+									<div class="input-group"><span class="input-group-addon">@</span>{{form.receiver | attr:"class:form-control" | attr:"id:receiver" }}</div>
 								</div>
 								<div {% if form.errors.email %}class="col-md-6 has-error"{%else%} class="col-md-6"{%endif%}>
-									<div class="input-group"><span class="input-group-addon"><i class="icon-envelope"></i></span>{{form.email | attr:"class:form-control" }}</div>
+									<div class="input-group"><span class="input-group-addon"><i class="icon-envelope"></i></span>{{form.email | attr:"class:form-control" | attr:"id:email" }}</div>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="row margin-bottom-10">
-								<div {% if form.errors.email %}class="col-md-6 has-error"{%else%} class="col-md-6"{%endif%}><div class="input-group"><span class="input-group-addon"><i class="icon-usd"></i></span>{{form.price | attr:"class:form-control" }}</div></div>
+								<div {% if form.errors.email %}class="col-md-6 has-error"{%else%} class="col-md-6"{%endif%}><div class="input-group"><span class="input-group-addon"><i class="icon-usd"></i></span>{{form.price | attr:"class:form-control" | attr:"id:price" }}</div></div>
 								<div class="col-md-6"><input type="submit" class="btn-u" value="Submit"/></div>
 							</div>
 						</div>
 						</div>
 						<div class="row margin-bottom-10">
-							<div class="col-md-9">
-							{{form.message | attr:"class:form-control" | attr:"placeholder:(100 words)" }}
-							</div>
+							<div  class="col-md-9">{{form.message | attr:"class:form-control" | attr:"placeholder:(100 words)" | attr:"id:message" }}</div>
 						</div>
 						<div class="row margin-bottom-10">
 							<div class="col-md-4">
-								<div class="input-group"><span class="input-group-addon"><i class="icon-youtube-play"></i></span>{{form.url_video | attr:"class:form-control" }}</div>
+								<div class="input-group"><span class="input-group-addon"><i class="icon-youtube-play"></i></span>{{form.url_video | attr:"class:form-control" | attr:"id:url_video" }}</div>
 							</div>
 							<div class="col-md-2">
 								<button class="btn btn-default icon-facetime-video btn-u-large" type="button">{% trans " Use webcam" %}</button>
@@ -52,18 +50,67 @@
 						</div>
 						<div class="row margin-bottom-10">
 							<div class="col-md-4">
-								<div class="input-group"><span class="input-group-addon"><i class=" icon-gift"></i></span>{{form.products | attr:"class:form-control" }}</div>
+								<div class="input-group"><span class="input-group-addon"><i class=" icon-gift"></i></span>{{form.products | attr:"class:form-control" | attr:"id:product" }}</div>
 							</div>
 						</div>
                         {{ form.youtube_embed.as_hidden }}
 					</div>
 				</form>
 								
-				<script>
+				<script>					
 					document.getElementById("id_file").onchange = function() {
-						document.getElementById('loading_image').style.display = 'block';
-						document.getElementById("id_youtube_form").submit();
+						$.ajax({
+							type: 'POST',
+							url: '/save_draft/',
+							data: {
+								'receiver': $("#receiver").val(),
+								'email' : $("#email").val(),
+								'price' : $("#price").val(),
+								'message' : $("#message").val(),
+								'product' : $("#product").val(),
+							},
+							success: function(data) {
+								document.getElementById('loading_image').style.display = 'block';
+								document.getElementById("id_youtube_form").submit();
+							}
+						});
+						
 					};
 				</script>
 {% endblock panel_body %}
+
+{% block history %}
+{% for gift in gifts %} 
+<br/><br/>
+<div style="border-right: 2px solid rgb(114, 192, 44);">
+	{% if gift.state.value == 'sent' %}
+	<div class="row margin-bottom-10">
+		<div class="col-md-6">
+			<iframe width="400" height="220" src="{{gift.youtube_embed}}" frameborder="0" allowfullscreen></iframe>
+		</div>
+		<div class="col-md-6" style="padding-top:25px;">
+			<div class="row">
+				<label class="col-md-3">Receiver:</label>
+				<label class="col-md-3" style="font-weight:normal;">{{gift.receiver}}</label>
+			</div>
+			<div class="row">
+				<label class="col-md-3">Price:</label>
+				<label class="col-md-3" style="font-weight:normal;">{{gift.price}} $</label>
+			</div>
+			<div class="row">
+				<label class="col-md-3">Message:</label>
+				<label class="col-md-3" style="font-weight:normal;">{{gift.message}}</label>
+			</div>
+		</div>
+	</div>
+	<div class="row margin-bottom-10">
+		<div class="col-md-9">
+			<!--<p>{{gift.product }}</p>-->
+		</div>
+	</div>
+	{%endif%}
+</div>
+<br/><br/>
+{% endfor %}
+{% endblock %}	
 
