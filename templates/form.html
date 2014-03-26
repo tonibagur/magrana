@@ -8,7 +8,7 @@
 				{% if form.errors %}
 				<div class="alert alert-danger">
 					<button class="close" data-dismiss="alert" type="button">x</button>
-					<strong>{% trans "Some required field is empty." %} </strong>
+					<strong>{% trans "Some required field is empty." %}</strong>
 				</div>
 				{%endif%} 
 				<img src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" style="display: none;" id="loading_image">
@@ -19,17 +19,15 @@
 					<div class="row margin-bottom-10">
 						<div class="col-md-9">
 							<div class="row margin-bottom-10">
-								<div class="col-md-6" class="col-md-6">
-									<div class="input-group"><span class="input-group-addon">@</span>{{form.receiver | attr:"class:form-control" | attr:"id:receiver" }}</div>
+								<div class="col-md-6 col-md-6">
+									<div {% if form.errors.receiver %}class="input-group has-error" {%else%} class="input-group" {%endif%}><span class="input-group-addon">@</span>{{form.receiver | attr:"class:form-control" | attr:"id:receiver" }}</div>
 								</div>
-								<div {% if form.errors.email %}class="col-md-6 has-error"{%else%} class="col-md-6"{%endif%}>
-									<div class="input-group"><span class="input-group-addon"><i class="icon-envelope"></i></span>{{form.email | attr:"class:form-control" | attr:"id:email" }}</div>
-								</div>
+								<div class="col-md-6"><div {% if form.errors.receiver %}class="input-group has-error" {%else%} class="input-group" {%endif%}><span class="input-group-addon"><i class="icon-envelope"></i></span>{{form.email | attr:"class:form-control" | attr:"id:email" }}</div></div>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="row margin-bottom-10">
-								<div {% if form.errors.email %}class="col-md-6 has-error"{%else%} class="col-md-6"{%endif%}><div class="input-group"><span class="input-group-addon"><i class="icon-usd"></i></span>{{form.price | attr:"class:form-control" | attr:"id:price" }}</div></div>
+								<div {% if form.errors.price %}class="col-md-6 has-error"{%else%} class="col-md-6"{%endif%}><div class="input-group"><span class="input-group-addon"><i class="icon-usd"></i></span>{{form.price | attr:"class:form-control" | attr:"id:price" }}</div></div>
 								<div class="col-md-6"><input type="submit" class="btn-u" value="Submit"/></div>
 							</div>
 						</div>

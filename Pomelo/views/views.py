@@ -29,7 +29,7 @@ def register_gift(request):
     if (request.method=='POST'):
         request_copy = request.POST.copy()
         receiver = False
-        if (request.POST['receiver']=='' and request.POST['email']!= ''):
+        if (request.POST['receiver']=='' and request.POST['email']!= '' and request.POST['price']!=''):
             user = User.objects.create_user(request.POST['email'].split('@')[0], request.POST['email'], str(random.randrange(1000, 9000)))
             receiver = PomeloUser(user=user)
             receiver.save()
