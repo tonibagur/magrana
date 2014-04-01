@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="pomelo-phone">
+<head>
+	<title>Pomelo Phone</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>     
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-resource.min.js"></script>-->
+    <script src="js/controllers.js"></script>
+</head>
+<body ng-controller="AppController">
+    <div ng-repeat="user in users">
+        {{ user.username }}
+    </div>
+</body>
+</html>

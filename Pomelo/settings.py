@@ -55,6 +55,9 @@ INSTALLED_APPS = (
     'django_youtube',
     'widget_tweaks',
 
+    # rest
+    'rest_framework',
+
     'Pomelo',
 )
 
@@ -163,5 +166,12 @@ EMAIL_HOST_PASSWORD = 'tumconep2012'
 DEFAULT_FROM_EMAIL = 'coneptum@gmail.com'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 SERVER_EMAIL = 'coneptum@gmail.com'
-#from django.core.mail import send_mail
-#send_mail('Subject here', 'Here is the message.', 'from@example.com', ['to@example.com'], fail_silently=False)
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGINATE_BY': 10
+}
+
+
+
+
