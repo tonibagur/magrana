@@ -8,10 +8,13 @@ from django_youtube.models import Video
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 import random
-from .. forms.form import GiftForm
+from .. forms.form import GiftForm,GiftFormWithNgModel
 from .. models.models import Gift
 from .. models.models import PomeloUser
-#send_mail('Subject here', 'Here is the message.', 'from@example.com', ['to@example.com'], fail_silently=False)
+from djangular.views.mixins import JSONResponseMixin
+from django.views.generic import View
+import json
+from django.views.generic.base import TemplateView
 
 subject = 'You\'ve received a Pomelo Card'
 
@@ -74,7 +77,7 @@ def register_gift(request):
     else:
         init={}
         video_id = request.GET.get('video_id', '')
-        pomelo_user = PomeloUser.objects.get(user=request.user.id)
+        pomelo_user = PomeloUser.objects.get(user=request.user.id) # TODO: system crashes in case no PomeloUser is in the database
         gifts = Gift.objects.filter(sender=pomelo_user.id)
         if video_id:
             videos = Video.objects.filter(video_id=str(video_id))
@@ -135,5 +138,67 @@ def views_gifts(request):
     return render(request, "gift_story.html", {
             'gifts' : gifts,
         })
+
+
+from django.views.generic import View
+from djangular.views.mixins import JSONResponseMixin, allowed_action
+
+class MyResponseView(JSONResponseMixin, View):
+    def get_youtube_data(self):
+        return { 'foo': 'bar' }
+
+def get_youtube_data(request):
+    print 'foooo'
+    raw_data = { 'foo': 'bar' }
+    #return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(json.dumps(raw_data), content_type="applycation/json")
+
+
+'''class PhoneAppView(JSONResponseMixin, View):
+    # other view methods
+
+    @allowed_action
+    def get_youtube(self, in_data):
+        print 'in data',in_data
+        # process in_data
+        out_data = {
+            'foo': 'bar',
+            'success': True,
+        }
+        return HttpResponse(json.dumps(out_data), content_type="application/json")
+        #return out_data'''
+
+
+class GiftView(TemplateView):
+    form = GiftFormWithNgModel
+    template_name = ''
+
+    def get_context_data(self, form=None, **kwargs):
+        context = super(GiftView, self).get_context_data(**kwargs)
+        context = None
+        #context.update(form=form, with_ws4redis=hasattr(settings, 'WEBSOCKET_URL')) #QUE ES AIXO?
+        return context
+
+    def get(self, request, **kwargs):
+        form = self.form()
+        context = self.get_context_data(form=form, **kwargs)
+        return self.render_to_response(context)
+
+    def post(self, request, **kwargs):
+        print 'into POST'
+        if request.is_ajax():
+            print "ajax"
+        print "no ajax"
+        form = self.form(request.POST)
+        if form.is_valid():
+            return redirect('form_data_valid')
+        context = self.get_context_data(form=form, **kwargs)
+        return self.render_to_response(context)
+
+    def ajax(self, request_body):
+        in_data = json.loads(request_body)
+        form = self.form(data=in_data)
+        response_data = {'errors': form.errors}
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
 
         

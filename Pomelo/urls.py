@@ -3,12 +3,15 @@ from views import views
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib import admin
+from views.views import MyResponseView, GiftView
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'Pomelo.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+    # phone app
+    url(r'^fetch-youtube-data.json$', MyResponseView.as_view(), {'action': 'get_youtube_data'}),
+    url(r'^gift_form/$', GiftView.as_view(), name='djng_gift_form'),
+    
+
     (r'^youtube/', include('django_youtube.urls')),
     url(r'^$', login_required(views.home, login_url='/accounts/login/'), name='home'),
     url(r'^accounts/login/$', 'django.contrib.auth.views.login',{'template_name': 'login.html'}),

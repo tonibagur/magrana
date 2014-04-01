@@ -55,6 +55,8 @@ INSTALLED_APPS = (
     'django_youtube',
     'widget_tweaks',
 
+    'djangular',
+
     'Pomelo',
 )
 

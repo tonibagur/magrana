@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="pomelo-phone">
+<head>
+	<title>Pomelo Phone</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>     
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-resource.min.js"></script>
+    <script src="js/controllers.js"></script>
+	<script src="js/django-angular.js" type="text/javascript"></script>
+</head>
+<body > <!--ng-controller="MainCtrl"-->
+
+    <form name="gift_form" novalidate method="post" action="." ng-controller="MyFormCtrl">
+        <input class="form-control" id="email" name="email" type="email" ng-model="gift_data.email"/>
+        <input class="form-control" id="price" name="price" step="0.01" type="number" ng-model="gift_data.price" />
+        <input class="form-control" id="url_video" name="url_video" type="text" ng-model="gift_data.url_video" />
+        <!--<input id="id_file" type="file" name="file" class="filestyle" data-input="false" form="id_youtube_form"/>-->
+        <input id="id_youtube_embed" name="youtube_embed" type="hidden" ng-model="gift_data.youtube_embed"/>
+        <button ng-click="submit()">Submit via Ajax</button>
+	</form>
+
+
+	<!--<div class="container">
+		<div class="row">
+
+             <form id="id_youtube_form" action="https://uploads.gdata.youtube.com/action/FormDataUpload/AIwbFASnHHDyiLV7lxtjEfeCNH9hTYf__dD1O7oqomXQO1cxWzjKDHFEBS-ZlapQdvvxlTJZOeEWhkfffaxFD10ekv9kDajM1w?nexturl=http://localhost:8001/youtube/upload/return/" method="post" enctype="multipart/form-data">
+		        <input id="id_token" name="token" type="hidden" value="AIwbFAQPFH7lHbscEoSoQ8NGUYMhmkItjVbvP-WIy_uPS8SgNhWvOkdWZKhDp5chJjFf1mLcuU4kuX6hcmbrk11HVueCbZ8hVbdDDhEXGxWfvgzJqDSR4oJvCXAP85B4N2YDSdxNUYLNZdfGsck2KzyBSV1uQ0vY15xgp8l0XAYq_fU2JDB6T5rF8O7J9wY9YgBofLLVzS1j002dsQ-jgKbV8TzCILmZ-ffb03CQmO9RlfLerz2nJQlulFaZwrdxJfT_4R595cFirO-ogflK0DC-3ty3Fsw2Og" />
+	        </form>
+
+           
+            
+
+			<form name="valid_form" novalidate="" method="post" action="." class="ng-invalid ng-invalid-required ng-pristine">
+		        <input type="submit" class="btn" ng-disabled="valid_form.$invalid" value="Subscribe" disabled="disabled">			
+	        </form>
+           
+		</div>
+	</div>-->
+</body>
+</html>
